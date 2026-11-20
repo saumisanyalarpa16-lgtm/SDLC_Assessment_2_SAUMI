@@ -74,7 +74,7 @@ class Requisition:
         print("The total number of pensing requisitions: ",pending)
         print("The total number of not approved requisitions: ",not_approved)
         return len(all_requisitions),approved,pending,not_approved
-        def submit_requisition(): 
+def submit_requisition(): 
     date = input("Date (dd/mm/yyyy): ")
     staff_id = input("Staff ID: ")
     staff_name= input("Staff Name: ")
@@ -98,6 +98,7 @@ class Requisition:
     print("Total: $"+ str(req.add_requisition(items)))
     req.approve_requisition()
     print("Status: ",req.status)
+    
 def manager_response():
     pending = []
     for req in all_requisitions:
@@ -128,3 +129,24 @@ def manager_response():
         decision = input("Do u approve "+req.staff_name+"'s requisition? (yes/no): ").lower().strip()
         req.respond_to_requisition(decision)
         print("Status: ",req.status)
+
+while True:
+    if len(all_requisitions) == 0:
+        print("\n1.Submit Requisition")
+    else:
+        print("\n1.Add another requisition")
+    print("2.Exit")
+    choice = input("Choose: ")
+    if choice == "1":
+        submit_requisition()
+    elif choice == "2":
+        break
+    else:
+        print("Please Choose 1 or 2.")
+
+if len(all_requisitions)>0:
+    manager_response()
+    print("\n------- Requisition--------")
+    first_req= all_requisitions[0]
+    first_req.display_requisitions()
+    first_req.requisition_statistics()
