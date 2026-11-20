@@ -19,7 +19,7 @@ class Requisition:
         for name, price in items:
             total = total + price
         if total == int(total):
-            total = float(total)
+            total = int(total)
         self.total = total
         return total
     
@@ -37,7 +37,7 @@ class Requisition:
             self.status = "Approved"
             self.approval_ref = self.staff_id + str(self.req_id)[-3:]
         elif decision == "no":
-            self.status = "Not Approved"
+            self.status = "Not approved"
         else:
             print("No decision made made. Status stays PENDING.")
 
@@ -69,11 +69,14 @@ class Requisition:
             else:
                 not_approved = not_approved + 1
         print("\nDisplaying the Requisition Statistics")
-        print("The total number of requisition submitted:",len(all_requisitions))
+        print("The total number of requisitions submitted:",len(all_requisitions))
         print("The total number of approved requisitions: ",approved)
-        print("The total number of pedsing requisitions: ",pending)
+        print("The total number of pending requisitions: ",pending)
         print("The total number of not approved requisitions: ",not_approved)
         return len(all_requisitions),approved,pending,not_approved
+    
+#----------------PROGRAMME---------------------------------
+
 def submit_requisition(): 
     date = input("Date (dd/mm/yyyy): ")
     staff_id = input("Staff ID: ")
@@ -86,7 +89,7 @@ def submit_requisition():
         item_name = input("Item Name: ")
         while True:
             try:
-                item_price = input("Item Price:" )
+                item_price = float(input("Item Price:" ))
                 break
             except ValueError:
                 print("Please enter a number.")
@@ -98,7 +101,7 @@ def submit_requisition():
     print("Total: $"+ str(req.add_requisition(items)))
     req.approve_requisition()
     print("Status: ",req.status)
-    
+
 def manager_response():
     pending = []
     for req in all_requisitions:
