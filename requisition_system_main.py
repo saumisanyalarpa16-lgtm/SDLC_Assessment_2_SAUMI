@@ -18,7 +18,7 @@ class Requisition:
         total = 0
         for name, price in items:
             total = total + price
-        if total == int(total) or float(total):
+        if total == int(total):
             total = float(total)
         self.total = total
         return total
@@ -46,18 +46,18 @@ class Requisition:
         print("Requisition ID:",self.req_id)
         print("Staff ID:",self.staff_id)
         print("Staff Name:",self.staff_name)
-        print("Total: $",self.total)
+        print("Total: $",str(self.total))
         print("Status: ",self.status)
         if self.approval_ref != "":
             print("Approval Reference Number: ", self.approval_ref)
         else:
             print("Approval reference Number: Not Available")
 
-    def display_requisitions():
+    def display_requisitions(self):
         for req in all_requisitions:
             req.display_requisition()
 
-    def requisition_statistics():
+    def requisition_statistics(self):
         approved = 0
         pending = 0
         not_approved = 0
@@ -71,7 +71,7 @@ class Requisition:
         print("\nDisplaying the Requisition Statistics")
         print("The total number of requisition submitted:",len(all_requisitions))
         print("The total number of approved requisitions: ",approved)
-        print("The total number of pensing requisitions: ",pending)
+        print("The total number of pedsing requisitions: ",pending)
         print("The total number of not approved requisitions: ",not_approved)
         return len(all_requisitions),approved,pending,not_approved
 def submit_requisition(): 
@@ -90,10 +90,10 @@ def submit_requisition():
                 break
             except ValueError:
                 print("Please enter a number.")
-            items.append((item_name,item_price))
-            another = input("Add another item (Yes/No)? ").lower().strip()
-            if another != "yes":
-                break
+        items.append((item_name,item_price))
+        another = input("Add another item (Yes/No)? ").lower().strip()
+        if another != "yes":
+            break
 
     print("Total: $"+ str(req.add_requisition(items)))
     req.approve_requisition()
@@ -113,7 +113,7 @@ def manager_response():
     tries = 0
     while True:
         code = input("Enter Manager's Code: ")
-        if code == "Manaher+123+admin":
+        if code == "Manager+123+admin":
             break
         tries = tries+1
         print("Wrong code. Try again.")
@@ -126,7 +126,7 @@ def manager_response():
         print("Requisition ID: ", req.req_id)
         print("Staff ID: ",req.staff_id)
         print("Total: $",str(req.total))
-        decision = input("Do u approve "+req.staff_name+"'s requisition? (yes/no): ").lower().strip()
+        decision = input("Do you approve "+req.staff_name+"'s requisition? (yes/no): ").lower().strip()
         req.respond_to_requisition(decision)
         print("Status: ",req.status)
 
