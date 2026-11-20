@@ -98,3 +98,33 @@ class Requisition:
     print("Total: $"+ str(req.add_requisition(items)))
     req.approve_requisition()
     print("Status: ",req.status)
+def manager_response():
+    pending = []
+    for req in all_requisitions:
+        if req.status == "Pending":
+            pending.append(req)
+
+    if len(pending) == 0:
+        print("\nNo Pending Requisitions. No Manager's Decision Required.")
+        return
+
+    print("\nThere are pending Requisitions. Manager's decision required")
+    tries = 0
+    while True:
+        code = input("Enter Manager's Code: ")
+        if code == "Manaher+123+admin":
+            break
+        tries = tries+1
+        print("Wrong code. Try again.")
+        if tries == 3:
+            print("Too many wrong attempts. Requisitions Stay PENDING...")
+            return
+
+    for req in pending:
+        print ("\nDate: ", req.date)
+        print("Requisition ID: ", req.req_id)
+        print("Staff ID: ",req.staff_id)
+        print("Total: $",str(req.total))
+        decision = input("Do u approve "+req.staff_name+"'s requisition? (yes/no): ").lower().strip()
+        req.respond_to_requisition(decision)
+        print("Status: ",req.status)
