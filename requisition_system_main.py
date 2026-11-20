@@ -27,10 +27,8 @@ class Requisition:
         if self.total < 500:
             self.status = "Approved"
             self.approval_ref = self.staff_id + str(self.req_id)[-3:]
-        elif self.total <=1000:
-            self.status = "Pending"
         else:
-            self.status = "Not approved"
+            self.status = "Pending"
 
     def respond_to_requisition(self, decision):
         if self.status != "Pending":
@@ -55,5 +53,24 @@ class Requisition:
         else:
             print("Approval reference Number: Not Available")
 
-    
+    def display_requisitions():
+        for req in all_requisitions:
+            req.display_requisition()
 
+    def requisition_statistics():
+        approved = 0
+        pending = 0
+        not_approved = 0
+        for req in all_requisitions:
+            if req.status == "Approved":
+                approved +=1
+            elif req.status == "Pending":
+                pending +=1
+            else:
+                not_approved = not_approved + 1
+        print("\nDisplaying the Requisition Statistics")
+        print("The total number of requisition submitted:",len(all_requisitions))
+        print("The total number of approved requisitions: ",approved)
+        print("The total number of pensing requisitions: ",pending)
+        print("The total number of not approved requisitions: ",not_approved)
+        return len(all_requisitions),approved,pending,not_approved
