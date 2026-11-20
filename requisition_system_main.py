@@ -74,3 +74,27 @@ class Requisition:
         print("The total number of pensing requisitions: ",pending)
         print("The total number of not approved requisitions: ",not_approved)
         return len(all_requisitions),approved,pending,not_approved
+        def submit_requisition(): 
+    date = input("Date (dd/mm/yyyy): ")
+    staff_id = input("Staff ID: ")
+    staff_name= input("Staff Name: ")
+    req= Requisition(date, staff_id, staff_name)
+    print("Requisition ID: ",req.req_id)
+
+    items = []
+    while True:
+        item_name = input("Item Name: ")
+        while True:
+            try:
+                item_price = input("Item Price:" )
+                break
+            except ValueError:
+                print("Please enter a number.")
+            items.append((item_name,item_price))
+            another = input("Add another item (Yes/No)? ").lower().strip()
+            if another != "yes":
+                break
+
+    print("Total: $"+ str(req.add_requisition(items)))
+    req.approve_requisition()
+    print("Status: ",req.status)
